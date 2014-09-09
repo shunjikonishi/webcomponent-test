@@ -1,0 +1,100 @@
+<template id="c1">
+  <style>
+:host {
+      display: inline-block;
+    }
+
+    /* module
+    ================================== */
+    .me {
+        font-family: 'Helvetica', Arial, sans-serif;
+        font-weight: 100;
+
+        position: relative;
+
+        display: inline-block;
+        overflow: hidden;
+
+        width: 265px;
+        height: 300px;
+
+        text-align: center;
+
+        color: #fff;
+        border-radius: 6px;
+        background-color: #2e353c;
+    }
+    .me dt {
+      display: none;
+    }
+    .me dd,
+    .me dl {
+      margin: 0;
+    }
+  </style>
+
+  <article class="me">
+    <dl class="me-profile">
+
+      <dt>画像</dt>
+      <dd class="me-image">
+        <img src=""></img>
+      </dd>
+
+      <dt>所属</dt>
+      <dd class="me-company"></dd>
+
+      <dt>名前</dt>
+      <dd class="me-name"></dd>
+
+      <dt>コンタクト</dt>
+      <a href="" class="me-contact-url">
+        <dd class="me-contact"></dd>
+      </a>
+      <dt>???</dt>
+      <dd><button class="me-xxx">Click me!</button>
+    </dl>
+  </article>
+</template>
+
+<script>
+(function(window, document) {    
+  function registerElement(name, id) {
+    var elementProto = Object.create(HTMLElement.prototype);
+    var template = doc.querySelector(id).content;
+    elementProto.createdCallback = function() {
+      var shadowDom = template.cloneNode(true);
+      var shadowRoot = this.createShadowRoot();
+      shadowRoot.appendChild(shadowDom);
+    }
+    elementProto.attachedCallback = function() {
+      // ShadowDOM化した内部から所定の要素を検索してプロフィールを設定する。
+      var shadowRoot = this.shadowRoot;
+      var name = this.getAttribute("name");
+      var contact = this.getAttribute("contact");
+      shadowRoot.querySelector('.me-image img').src = this.getAttribute("img");
+      shadowRoot.querySelector('.me-name').textContent = name;
+      shadowRoot.querySelector('.me-company').textContent = this.getAttribute("company");
+      shadowRoot.querySelector('.me-contact').textContent = "@" + contact;
+      shadowRoot.querySelector('.me-contact-url').href = "https://twitter.com/" + contact;
+      shadowRoot.querySelector(".me-xxx").onclick = function() {
+        alert("こんにちは　" + name + "です");
+      };
+    };
+    elementProto.attributeChangedCallback = function(attrName, oldValue, newValue) {
+      if (attrName == "company") {
+        this.shadowRoot.querySelector('.me-company').textContent = newValue;
+      }
+    }
+    // カスタム要素を登録
+    document.registerElement(name, {
+      prototype: elementProto
+    });
+  }
+  // HTMLElementを継承します
+  var doc = document.currentScript.ownerDocument;
+  registerElement("x-shunji-konishi", "#c1");
+
+})(window, document);
+</script>
+

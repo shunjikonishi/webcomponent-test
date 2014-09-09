@@ -1,17 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>x-business-card</title>
-
-    <!-- Importing Custom Elements -->
-    <link rel="import" href="x-business-card.html">
-    
+<meta charset="UTF-8">
+<title>x-business-card</title>
+<style type="text/css">
+	.name { 
+		color: red;
+	}
+</style> 
+<link rel="import" href="x-shunji-konishi.html" />
+<link rel="import" href="x-shunji-konishi-2.html" />
+<link rel="import" href="x-business-card.html" />
 </head>
 <body>
+<p>test <span class="name">hoge</span></p>
+<hr>
+<x-konishi></x-konishi>
+<hr>
+<x-shunji></x-shunji>
+<hr>
+<x-shunji-konishi 
+	img="https://pbs.twimg.com/profile_images/442961765647650816/UmCaKfSq_bigger.jpeg"
+	name="小西俊司"
+	company="FLECT"
+	contact="shunjikonishi"
+	></x-shunji-konishi>
+<hr>
+<button id="btnChangeName">名前を変更する</button>
+<hr>
+<x-business-card class="enpura"></x-business-card>
+<script>
+(function(window, document) {
+	document.querySelector("#btnChangeName").onclick = function() {
+		var el = document.querySelector("x-shunji-konishi");
+		console.log("test1", el);
+		console.log("test2", el.getAttribute("company"));
+		el.setAttribute("company", "Shunji Konishi");
+		console.log("test3", el.getAttribute("company"));
+	}
+})(window, document);
 
-    <!-- Using Custom Elements -->
-    <x-business-card class="enpura"></x-business-card>
-
+</script>
 </body>
 </html>

@@ -1,0 +1,48 @@
+<template id="c1">
+
+  <style>
+    .name {
+      color: blue;
+      font-weight: bold;
+    }
+  </style>
+
+  <p>Hello world. <span class="name">@shunjikonishi</span></p>
+
+</template>
+
+<template id="c2">
+
+  <style>
+    .name {
+      color: blue;
+      font-weight: bold;
+    }
+  </style>
+
+  <p>Hello world. <span class="name">小西俊司</span></p>
+
+</template>
+<script>
+(function(window, document) {    
+  function registerElement(name, id) {
+    var elementProto = Object.create(HTMLElement.prototype);
+    var template = doc.querySelector(id).content;
+    elementProto.createdCallback = function() {
+      var shadowDom = template.cloneNode(true);
+      var shadowRoot = this.createShadowRoot();
+      shadowRoot.appendChild(shadowDom);
+    }
+
+    // カスタム要素を登録
+    document.registerElement(name, {
+      prototype: elementProto
+    });
+  }
+  // HTMLElementを継承します
+  var doc = document.currentScript.ownerDocument;
+  registerElement("x-konishi", "#c1");
+  registerElement("x-shunji", "#c2");
+
+})(window, document);
+</script>
