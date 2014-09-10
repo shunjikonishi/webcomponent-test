@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>WebComponents samples</title>
+<link rel="import" href="https://excelreport.net/webcomponents.html" />
+</head>
+<body>
+<h1>WebComponentsとCORS対応のサービスのサンプル</h1>
+<a href="https://github.com/shunjikonishi/webcomponent-test/blob/master/corsSample.html">ソースを見る</a>
+<hr>
+<div>
+	<!-- ビューコンポーネント -->
+	<excelreport-view id="sample"
+		user="sample"
+		template="estimate"
+		form="true"
+		live="true"/>
+</div>
+<div>
+	<!-- ダウンロード用のボタンコンポーネント -->
+	<excelreport-pdf ref="#sample">PDFダウンロード</excelreport-pdf>
+	<excelreport-excel ref="#sample">Excelダウンロード</excelreport-excel>
+</div>
+</body>
+</html>
